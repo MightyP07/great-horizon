@@ -1,7 +1,20 @@
 import { ChevronDown } from "lucide-react";
 import { Link } from "wouter";
 
-const navItems = [
+type NavChild = {
+  label: string;
+  path: string;
+};
+
+type NavItem = {
+  number: string;
+  label: string;
+  path?: string;
+  dropdown?: boolean;
+  children?: NavChild[];
+};
+
+const navItems: NavItem[] = [
   {
     number: "01",
     label: "Food Bank",
@@ -48,13 +61,11 @@ const navItems = [
 function Navbar() {
   return (
     <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
-
       {navItems.map((item, i) => (
         <div
           key={i}
           className="relative flex flex-col items-center group cursor-pointer"
         >
-
           {/* NUMBER */}
           <span className="text-[11px] text-white/60 tracking-widest">
             {item.number}
@@ -73,7 +84,7 @@ function Navbar() {
               />
             </div>
           ) : (
-            <Link href={item.path}>
+            <Link href={item.path ?? "/"}>
               <span className="text-white text-sm font-medium hover:text-green-400 transition">
                 {item.label}
               </span>
@@ -82,7 +93,8 @@ function Navbar() {
 
           {/* DROPDOWN */}
           {item.dropdown && (
-            <div className="
+            <div
+              className="
               absolute top-[170%] left-1/2 -translate-x-1/2
               min-w-[220px]
               bg-white rounded-xl shadow-xl
@@ -91,8 +103,9 @@ function Navbar() {
               group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
               transition-all duration-300
               z-50
-            ">
-              {item.children.map((child, idx) => (
+            "
+            >
+              {item.children?.map((child, idx) => (
                 <Link
                   key={idx}
                   href={child.path}
@@ -107,10 +120,8 @@ function Navbar() {
               ))}
             </div>
           )}
-
         </div>
       ))}
-
     </nav>
   );
 }

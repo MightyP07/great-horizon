@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 import Hero from "../components/Hero";
 import SupportUs from "../components/SupportUs";
@@ -10,7 +10,7 @@ import Images from "../components/Images";
 import Testimonials from "../components/Testimonials";
 import Footer from "../components/Footer";
 
-const sectionVariant = {
+const sectionVariant : Variants = {
   hidden: { opacity: 0, y: 120 },
   visible: {
     opacity: 1,

@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const stats = [
+type Stat = {
+  label: string;
+  value: number;
+  suffix: string;
+};
+
+const stats: Stat[] = [
   { label: "Beneficiaries", value: 1250000, suffix: "+" },
   { label: "Partnerships", value: 72, suffix: "" },
   { label: "Volunteers", value: 100, suffix: "+" },
   { label: "Donations Delivered", value: 240, suffix: "+" },
 ];
 
-function useCounter(target, startTrigger, duration = 900) {
-  const [count, setCount] = useState(0);
+// FIX: properly type hook params
+function useCounter(target: number, startTrigger: boolean, duration: number = 900) {
+  const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
     if (!startTrigger) return;
@@ -34,7 +41,15 @@ function useCounter(target, startTrigger, duration = 900) {
   return count;
 }
 
-function StatCard({ label, value, suffix, start }: any) {
+// FIX: proper typing instead of any
+type StatCardProps = {
+  label: string;
+  value: number;
+  suffix: string;
+  start: boolean;
+};
+
+function StatCard({ label, value, suffix, start }: StatCardProps) {
   const count = useCounter(value, start);
 
   return (
@@ -71,12 +86,11 @@ function StatCard({ label, value, suffix, start }: any) {
 }
 
 function Workings() {
-  const [start, setStart] = useState(false);
+  const [start, setStart] = useState<boolean>(false);
 
   return (
     <section className="relative w-full py-16 md:py-28 bg-gray-50 overflow-hidden">
 
-      {/* BACKGROUND GLOW */}
       <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[400px] sm:w-[500px] md:w-[600px] h-[400px] sm:h-[500px] md:h-[600px] bg-green-100/30 blur-3xl rounded-full" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
@@ -90,7 +104,6 @@ function Workings() {
           onViewportEnter={() => setStart(true)}
           className="text-center mb-12 md:mb-16"
         >
-
           <span className="text-green-600 uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold">
             Our Impact
           </span>
@@ -103,7 +116,6 @@ function Workings() {
             Every figure represents lives supported, communities reached,
             and systems strengthened through coordinated action.
           </p>
-
         </motion.div>
 
         {/* GRID */}

@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { Target, Eye, HeartHandshake } from "lucide-react";
 
-const cardVariant = {
+const cardVariant: Variants = {
   hidden: { opacity: 0, y: 40 },
-  visible: (i) => ({
+  visible: (i: number) => ({
     opacity: 1,
     y: 0,
     transition: {

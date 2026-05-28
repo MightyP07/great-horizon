@@ -3,7 +3,6 @@ import {
   Mail,
   Phone,
   MapPin,
-  MessageSquare,
   Send,
   HeartHandshake,
 } from "lucide-react";
@@ -16,14 +15,19 @@ function Contact() {
     message: "",
   });
 
-  const handleChange = (e: any) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+) => {
+  setForm({
+    ...form,
+    [e.target.name]: e.target.value,
+  });
+};
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log(form);
-  };
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  console.log(form);
+};
 
   return (
     <main className="relative min-h-screen bg-white overflow-hidden pt-32 px-6">

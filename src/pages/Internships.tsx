@@ -17,14 +17,19 @@ function Internships() {
     why: "",
   });
 
-  const handleChange = (e: any) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+) => {
+  setForm({
+    ...form,
+    [e.target.name]: e.target.value,
+  });
+};
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log(form);
-  };
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  console.log(form);
+};
 
   return (
     <main className="relative min-h-screen bg-white pt-32 px-6 overflow-hidden">

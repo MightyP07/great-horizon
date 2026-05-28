@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import {
   ShieldCheck,
   Truck,
@@ -30,9 +30,9 @@ const leaders = [
   },
 ];
 
-const cardVariant = {
+const cardVariant: Variants = {
   hidden: { opacity: 0, y: 60 },
-  visible: (i) => ({
+  visible: (i: number) => ({
     opacity: 1,
     y: 0,
     transition: {

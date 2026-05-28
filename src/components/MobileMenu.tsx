@@ -2,7 +2,23 @@ import { useState } from "react";
 import { X, ChevronDown } from "lucide-react";
 import { Link } from "wouter";
 
-const navItems = [
+type NavChild = {
+  label: string;
+  path: string;
+};
+
+type NavItem = {
+  label: string;
+  path?: string;
+  children?: NavChild[];
+};
+
+type MobileMenuProps = {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const navItems: NavItem[] = [
   {
     label: "Food Bank",
     children: [
@@ -36,22 +52,15 @@ const navItems = [
   { label: "Contact", path: "/contact" },
 ];
 
-export default function MobileMenu({ open, setOpen }) {
-  const [active, setActive] = useState(null);
+export default function MobileMenu({ open, setOpen }: MobileMenuProps) {
+  const [active, setActive] = useState<number | null>(null);
 
   if (!open) return null;
 
   return (
     <div className="fixed inset-0 z-[9999] bg-black/60">
-
       {/* PANEL */}
-      <div className="
-        absolute right-0 top-0 h-full w-[85%]
-        bg-[#021D05]
-        p-6
-        flex flex-col gap-6
-      ">
-
+      <div className="absolute right-0 top-0 h-full w-[85%] bg-[#021D05] p-6 flex flex-col gap-6">
         {/* TOP */}
         <div className="flex justify-between items-center">
           <h2 className="text-white text-xl font-bold">Menu</h2>
@@ -63,16 +72,12 @@ export default function MobileMenu({ open, setOpen }) {
 
         {/* LINKS */}
         <div className="flex flex-col gap-3">
-
           {navItems.map((item, i) => (
             <div key={i} className="border-b border-white/10 pb-3">
-
               {item.children ? (
                 <>
                   <button
-                    onClick={() =>
-                      setActive(active === i ? null : i)
-                    }
+                    onClick={() => setActive(active === i ? null : i)}
                     className="flex justify-between w-full text-white py-2"
                   >
                     {item.label}
@@ -100,17 +105,15 @@ export default function MobileMenu({ open, setOpen }) {
                 </>
               ) : (
                 <Link
-                  href={item.path}
+                  href={item.path as string}
                   onClick={() => setOpen(false)}
                   className="block text-white py-2"
                 >
                   {item.label}
                 </Link>
               )}
-
             </div>
           ))}
-
         </div>
       </div>
     </div>

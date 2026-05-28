@@ -3,7 +3,6 @@ import {
   CreditCard,
   Landmark,
   Globe2,
-  Wallet,
   HeartHandshake,
   ArrowRight,
 } from "lucide-react";

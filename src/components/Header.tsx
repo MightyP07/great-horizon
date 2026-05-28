@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Navbar from "./Navbar";
-import MobileMenu from "./MobileMenu";
+import MobileMenu from "./MobileMenu.tsx";
 import { Menu } from "lucide-react";
 
 function Header() {
