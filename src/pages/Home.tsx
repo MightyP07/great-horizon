@@ -21,7 +21,7 @@ const sectionVariant : Variants = {
 
 function Home() {
   return (
-    <main className="bg-white text-black">
+    <main className="bg-white text-black z[10]">
       {/* SECTIONS */}
 
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
