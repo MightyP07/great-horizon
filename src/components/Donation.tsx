@@ -15,8 +15,26 @@ function Donate() {
     email: "",
     address: "",
     amount: "",
-    currency: "NGN",
+    currency: "",
   });
+
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  // TOAST STATE
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    type: "success",
+  });
+
+  const showToast = (message: string, type = "success") => {
+    setToast({ show: true, message, type });
+
+    setTimeout(() => {
+      setToast({ show: false, message: "", type: "success" });
+    }, 3000);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -24,9 +42,42 @@ function Donate() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(form);
+    setLoading(true);
+    setSuccess(false);
+
+    try {
+      const res = await fetch("https://formspree.io/f/xwvjarlr", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        setSuccess(true);
+
+        showToast("Donation sent successfully 🙌", "success");
+
+        setForm({
+          name: "",
+          email: "",
+          address: "",
+          amount: "",
+          currency: "NGN",
+        });
+      } else {
+        showToast("Something went wrong. Try again.", "error");
+      }
+    } catch (err) {
+      console.error(err);
+      showToast("Network error. Check connection.", "error");
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -122,13 +173,27 @@ function Donate() {
 
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-[#008000] text-white font-semibold hover:bg-green-700 hover:scale-[1.02] active:scale-95 transition-all duration-300"
+              disabled={loading}
+              className="w-full py-3 rounded-xl bg-[#008000] text-white font-semibold hover:bg-green-700 hover:scale-[1.02] active:scale-95 transition-all duration-300 disabled:opacity-50 cursor-pointer"
             >
-              Submit Donation
+              {loading ? "Submitting..." : "Submit Donation"}
             </button>
           </form>
         </motion.div>
       </div>
+
+      {/* TOAST */}
+      {toast.show && (
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          className={`fixed bottom-6 right-6 px-5 py-3 rounded-xl shadow-xl text-white font-medium ${
+            toast.type === "success" ? "bg-green-600" : "bg-red-600"
+          }`}
+        >
+          {toast.message}
+        </motion.div>
+      )}
     </section>
   );
 }

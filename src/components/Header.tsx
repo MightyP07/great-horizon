@@ -19,7 +19,7 @@ function Header() {
 
           {/* LOGO */}
           <h1 className="text-white text-xl sm:text-2xl font-bold">
-            Great Horizon
+            Great Horizon Food Bank
           </h1>
 
           {/* DESKTOP NAV */}

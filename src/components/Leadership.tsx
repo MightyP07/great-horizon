@@ -1,4 +1,5 @@
 import { motion, type Variants } from "framer-motion";
+
 import {
   ShieldCheck,
   Truck,
@@ -9,24 +10,38 @@ import {
 const leaders = [
   {
     icon: ShieldCheck,
-    role: "Executive Director",
-    title: "Operations & Strategy",
+    role: "Mr Stephen Bakare",
+    title: "CEO",
     description:
-      "Oversees organizational growth, strategic partnerships, and long-term food security initiatives.",
-  },
-  {
-    icon: Truck,
-    role: "Logistics Lead",
-    title: "Distribution Systems",
-    description:
-      "Coordinates transportation, warehousing, and rapid delivery systems across multiple regions.",
+      "Provides overall leadership, strategic direction, and organizational oversight to drive the mission and long-term growth.",
   },
   {
     icon: Users,
-    role: "Community Lead",
-    title: "Outreach & Volunteers",
+    role: "Mrs Abigeal Atere",
+    title: "Managing Director — Operations & Strategies",
     description:
-      "Builds volunteer networks and strengthens relationships with underserved communities.",
+      "Leads operational planning and strategic execution, ensuring initiatives are coordinated effectively and aligned with organizational goals.",
+  },
+  {
+    icon: Truck,
+    role: "Mr Joseph Gholahan",
+    title: "Logistics Lead — Distribution Systems",
+    description:
+      "Coordinates logistics, transportation, warehousing, and distribution systems to ensure efficient delivery across communities.",
+  },
+  {
+    icon: Users,
+    role: "Miss Favour Adana",
+    title: "Community Lead — Outreach & Volunteers",
+    description:
+      "Strengthens community engagement, coordinates outreach initiatives, and builds effective volunteer networks.",
+  },
+  {
+    icon: Users,
+    role: "Mr Dayo Adebayo",
+    title: "Community Lead — Outreach & Volunteers",
+    description:
+      "Supports community outreach and volunteer coordination while helping strengthen relationships with underserved communities.",
   },
 ];
 
@@ -46,12 +61,10 @@ const cardVariant: Variants = {
 function Leadership() {
   return (
     <section className="relative py-28 px-6 bg-white overflow-hidden">
-
       {/* BACKGROUND DECOR */}
       <div className="absolute right-0 top-0 w-[400px] h-[400px] bg-green-100/40 blur-3xl rounded-full" />
 
       <div className="relative max-w-6xl mx-auto">
-
         {/* TOP LABEL */}
         <motion.span
           initial={{ opacity: 0, y: 20 }}
@@ -112,20 +125,23 @@ function Leadership() {
               "
             >
               Our leadership combines operational discipline,
-              humanitarian coordination, and community-centered
-              execution to ensure every initiative creates measurable impact.
+              strategic planning, humanitarian coordination, and
+              community-centered execution to ensure every initiative
+              creates measurable impact.
             </p>
           </div>
 
           {/* SIDE STATS */}
-          <div className="
-            bg-[#021D05]
-            text-white
-            rounded-3xl
-            p-6
-            min-w-[220px]
-            shadow-xl
-          ">
+          <div
+            className="
+              bg-[#021D05]
+              text-white
+              rounded-3xl
+              p-6
+              min-w-[220px]
+              shadow-xl
+            "
+          >
             <p className="text-sm text-white/70 uppercase tracking-widest">
               Active Reach
             </p>
@@ -142,13 +158,12 @@ function Leadership() {
 
         {/* LEADERS GRID */}
         <div className="grid md:grid-cols-3 gap-7 mt-20">
-
           {leaders.map((leader, index) => {
             const Icon = leader.icon;
 
             return (
               <motion.div
-                key={leader.role}
+                key={`${leader.role}-${leader.title}`}
                 custom={index}
                 variants={cardVariant}
                 initial="hidden"
@@ -168,7 +183,6 @@ function Leadership() {
                   duration-500
                 "
               >
-
                 {/* TOP ICON */}
                 <div
                   className="
@@ -180,10 +194,13 @@ function Leadership() {
                     transition
                   "
                 >
-                  <Icon size={30} className="text-[#008000]" />
+                  <Icon
+                    size={30}
+                    className="text-[#008000]"
+                  />
                 </div>
 
-                {/* ROLE */}
+                {/* NAME */}
                 <h3 className="text-2xl font-bold text-[#021D05]">
                   {leader.role}
                 </h3>
@@ -234,11 +251,9 @@ function Leadership() {
                     transition
                   "
                 />
-
               </motion.div>
             );
           })}
-
         </div>
       </div>
     </section>

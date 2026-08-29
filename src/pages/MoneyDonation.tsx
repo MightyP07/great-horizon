@@ -1,13 +1,41 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   CreditCard,
   Landmark,
   Globe2,
   HeartHandshake,
   ArrowRight,
+  Copy,
+  Check,
 } from "lucide-react";
 
 function MoneyDonation() {
+  const [selectedMethod, setSelectedMethod] = useState(null);
+const [copied, setCopied] = useState(false);
+
+const donationMethods = {
+  local: {
+    title: "Local Bank Transfer",
+    bank: "Zenith Bank",
+    accountName: "Great Horizon AgriBusiness Services",
+    accountNumber: "1229613859",
+  },
+
+  foreign: {
+    title: "Foreign Transfer",
+    bank: "USD Domiciliary Account",
+    accountName: "The Great Horizon Foundation",
+    accountNumber: "1234567890",
+  },
+
+  online: {
+    title: "Online Donation",
+    bank: "Secure Payment Gateway",
+    accountName: "The Great Horizon Foundation",
+    accountNumber: "Donate Online",
+  },
+};
   return (
     <main className="relative min-h-screen bg-white overflow-hidden pt-32 px-6">
 
@@ -44,39 +72,10 @@ function MoneyDonation() {
         </motion.div>
 
         {/* DONATION METHODS */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-7 mt-20">
-
-          {/* ONLINE */}
-          <motion.div
-            whileHover={{ y: -8 }}
-            className="
-              bg-white
-              border border-gray-100
-              rounded-3xl
-              p-8
-              shadow-sm
-              hover:shadow-2xl
-              transition-all
-              duration-500
-            "
-          >
-
-            <div className="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center">
-              <CreditCard className="text-green-600" size={28} />
-            </div>
-
-            <h3 className="mt-6 text-xl font-semibold text-[#021D05]">
-              Online Donation
-            </h3>
-
-            <p className="mt-3 text-gray-600 leading-relaxed text-sm">
-              Support securely through fast and convenient online payments.
-            </p>
-
-          </motion.div>
-
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7 mt-20">
           {/* LOCAL TRANSFER */}
           <motion.div
+  onClick={() => setSelectedMethod(donationMethods.local)}
             whileHover={{ y: -8 }}
             className="
               bg-[#021D05]
@@ -85,7 +84,7 @@ function MoneyDonation() {
               p-8
               shadow-xl
               relative
-              overflow-hidden
+              overflow-hidden cursor-pointer
             "
           >
 
@@ -112,6 +111,7 @@ function MoneyDonation() {
 
           {/* FOREIGN */}
           <motion.div
+  // onClick={() => setSelectedMethod(donationMethods.foreign)}
             whileHover={{ y: -8 }}
             className="
               bg-white
@@ -122,6 +122,7 @@ function MoneyDonation() {
               hover:shadow-2xl
               transition-all
               duration-500
+              cursor-pointer
             "
           >
 
@@ -141,6 +142,7 @@ function MoneyDonation() {
 
           {/* CHEQUES */}
 <motion.div
+  // onClick={() => setSelectedMethod(donationMethods.online)}
   whileHover={{ y: -8 }}
   className="
     group
@@ -156,6 +158,7 @@ function MoneyDonation() {
     duration-500
     overflow-hidden
     relative
+    cursor-pointer
   "
 >
 
@@ -258,6 +261,199 @@ function MoneyDonation() {
         </motion.div>
 
       </div>
+
+      <AnimatePresence>
+  {selectedMethod && (
+    <>
+      {/* BACKDROP */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => setSelectedMethod(null)}
+        className="fixed inset-0 bg-black/70 backdrop-blur-md z-50"
+      />
+
+      {/* MODAL */}
+      <motion.div
+        initial={{
+          opacity: 0,
+          scale: 0.8,
+          y: 40,
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1,
+          y: 0,
+        }}
+        exit={{
+          opacity: 0,
+          scale: 0.8,
+          y: 40,
+        }}
+        transition={{
+          duration: 0.35,
+        }}
+        className="
+          fixed
+          inset-0
+          z-[9999]
+          flex
+          items-center
+          justify-center
+          p-5
+        "
+      >
+        <div
+          className="
+            relative
+            w-full
+            max-w-xl
+            rounded-[2rem]
+            bg-white
+            overflow-hidden
+            shadow-[0_25px_100px_rgba(0,0,0,0.25)]
+          "
+        >
+          {/* GLOW */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-green-300/40 blur-3xl rounded-full" />
+
+          <div className="relative p-8 md:p-10">
+
+            {/* ICON */}
+            <div className="
+              w-16 h-16
+              rounded-2xl
+              bg-green-100
+              flex
+              items-center
+              justify-center
+            ">
+              <Landmark
+                className="text-green-600"
+                size={30}
+              />
+            </div>
+
+            {/* TITLE */}
+            <h2 className="mt-6 text-3xl md:text-4xl font-bold text-[#021D05]">
+              {selectedMethod.title}
+            </h2>
+
+            <p className="mt-3 text-gray-500">
+              Complete your donation using the account information below.
+            </p>
+
+            {/* DETAILS */}
+            <div className="mt-10 space-y-6">
+
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
+                  Bank
+                </p>
+
+                <p className="mt-1 text-xl font-semibold text-[#021D05]">
+                  {selectedMethod.bank}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
+                  Account Name
+                </p>
+
+                <p className="mt-1 text-xl font-semibold text-[#021D05]">
+                  {selectedMethod.accountName}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
+                  Account Number
+                </p>
+
+                <p className="
+                  mt-2
+                  text-3xl
+                  md:text-4xl
+                  font-bold
+                  tracking-wider
+                  text-green-600
+                ">
+                  {selectedMethod.accountNumber}
+                </p>
+              </div>
+
+            </div>
+
+            {/* BUTTONS */}
+            <div className="mt-10 flex flex-col sm:flex-row gap-3">
+
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    selectedMethod.accountNumber
+                  );
+
+                  setCopied(true);
+
+                  setTimeout(() => {
+                    setCopied(false);
+                  }, 2000);
+                }}
+                className="
+                  flex-1
+                  py-3
+                  rounded-full
+                  bg-green-600
+                  text-white
+                  font-semibold
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+                  hover:scale-[1.02]
+                  transition
+                "
+              >
+                {copied ? (
+                  <>
+                    <Check size={18} />
+                    Copied
+                  </>
+                ) : (
+                  <>
+                    <Copy size={18} />
+                    Copy Account Number
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={() => setSelectedMethod(null)}
+                className="
+                  px-8
+                  py-3
+                  rounded-full
+                  border
+                  border-gray-200
+                  font-medium
+                  hover:bg-gray-50
+                  transition
+                  text-[#008000]
+                "
+              >
+                Close
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      </motion.div>
+    </>
+  )}
+</AnimatePresence>
     </main>
   );
 }

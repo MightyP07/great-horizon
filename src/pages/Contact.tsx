@@ -68,18 +68,60 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
           {/* INFO SIDE */}
           <div className="space-y-6">
 
-            <motion.div
-              whileHover={{ y: -6 }}
-              className="p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition bg-white"
-            >
-              <div className="flex items-center gap-3">
-                <MapPin className="text-green-600" />
-                <h3 className="font-semibold text-[#021D05]">Location</h3>
-              </div>
-              <p className="mt-2 text-gray-600 text-sm">
-                Kwara State, Ilorin, Nigeria
-              </p>
-            </motion.div>
+<motion.div
+  whileHover={{ y: -6 }}
+  className="p-7 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition bg-white"
+>
+  {/* HEADER */}
+  <div className="flex items-center gap-3">
+    <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
+      <MapPin className="text-green-600" />
+    </div>
+
+    <div>
+      <h3 className="font-semibold text-[#021D05]">Our Locations</h3>
+      <p className="text-xs text-gray-500">Where we operate across Nigeria</p>
+    </div>
+  </div>
+
+  {/* MAIN OFFICE */}
+  <div className="mt-6 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+    <p className="text-xs uppercase tracking-wider text-green-600 font-semibold">
+      Head Office
+    </p>
+    <p className="mt-2 text-sm text-[#021D05] font-semibold leading-relaxed">
+      48, Arigbanla Street, Iyana-Odo, Abule-Egba, Lagos, Nigeria
+    </p>
+  </div>
+
+  {/* ANNEX */}
+  <div className="mt-5">
+    <h3 className="font-semibold text-[#021D05] text-sm mb-3">
+      Annex Offices
+    </h3>
+
+    <div className="space-y-3">
+      <div className="p-3 rounded-xl bg-white border border-gray-100 hover:border-green-200 transition">
+        <p className="text-sm text-gray-600">
+          3, Mosque Street, Gasline Bus Stop, Matogun, Ogun State
+        </p>
+      </div>
+
+      <div className="p-3 rounded-xl bg-white border border-gray-100 hover:border-green-200 transition">
+        <p className="text-sm text-gray-600">
+          84, Gaa-Akanbi, Erin-Ile Junction, Ilorin, Kwara State
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {/* FOOTER NOTE */}
+  <div className="mt-5 pt-4 border-t border-gray-100">
+    <p className="text-xs text-gray-400">
+      More partner locations across Nigeria coming soon.
+    </p>
+  </div>
+</motion.div>
 
             <motion.div
               whileHover={{ y: -6 }}
@@ -89,8 +131,11 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 <Phone className="text-green-600" />
                 <h3 className="font-semibold text-[#021D05]">Phone</h3>
               </div>
-              <p className="mt-2 text-gray-600 text-sm">
+              <p className="mt-2 ml-4 text-gray-600 text-sm">
                 +234 816 895 5738
+              </p>
+              <p className="mt-2 ml-4 text-gray-600 text-sm">
+                +234 707 895 1940
               </p>
             </motion.div>
 
@@ -103,7 +148,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 <h3 className="font-semibold text-[#021D05]">Email</h3>
               </div>
               <p className="mt-2 text-gray-600 text-sm">
-                thegreathorizon@gmail.com
+                info@greathorizonfoodbank.com.ng
               </p>
             </motion.div>
 

@@ -25,14 +25,14 @@ function Footer() {
 
             <div className="space-y-3 text-xs">
               <p className="font-semibold">Location</p>
-              <p className="text-white/60">Ilorin, Nigeria</p>
+              <p className="text-white/60">48, Arigbanla Street, Iyana-Odo, Abule-Egba, Lagos, Nigeria (HEAD OFFICE)</p>
 
               <p className="font-semibold mt-3">Phone</p>
-              <p className="text-white/60">+234 816 895 5738</p>
+              <p className="text-white/60">+234 816 895 5738, +234 707 895 1940</p>
 
               <p className="font-semibold mt-3">Email</p>
               <p className="text-white/60 break-words">
-                thegreathorizon@gmail.com
+                info@greathorizonfoodbank.com.ng
               </p>
             </div>
           </motion.div>
@@ -100,14 +100,14 @@ function Footer() {
 
             <div className="space-y-4 text-sm">
               <p className="font-semibold">Location</p>
-              <p className="text-white/60">Ilorin, Nigeria</p>
+              <p className="text-white/60">48, Arigbanla Street, Iyana-Odo, Abule-Egba, Lagos, Nigeria (HEAD OFFICE)</p>
 
               <p className="font-semibold">Phone</p>
-              <p className="text-white/60">+234 816 895 5738</p>
+              <p className="text-white/60">+234 816 895 5738, +234 707 895 1940</p>
 
               <p className="font-semibold">Email</p>
               <p className="text-white/60 break-words">
-                thegreathorizon@gmail.com
+                info@greathorizonfoodbank.com.ng
               </p>
             </div>
           </motion.div>
@@ -177,9 +177,7 @@ function Footer() {
               )}
             </ul>
           </motion.div>
-
         </div>
-
       </div>
 
       {/* BOTTOM BAR */}
