@@ -9,58 +9,82 @@ type FormState = {
   currency: string;
 };
 
+type ToastState = {
+  show: boolean;
+  message: string;
+  type: "success" | "error";
+};
+
 function Donate() {
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
     address: "",
     amount: "",
-    currency: "",
+    currency: "NGN",
   });
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
-  // TOAST STATE
-  const [toast, setToast] = useState({
+  const [toast, setToast] = useState<ToastState>({
     show: false,
     message: "",
     type: "success",
   });
 
-  const showToast = (message: string, type = "success") => {
-    setToast({ show: true, message, type });
+  const showToast = (
+    message: string,
+    type: "success" | "error" = "success"
+  ) => {
+    setToast({
+      show: true,
+      message,
+      type,
+    });
 
     setTimeout(() => {
-      setToast({ show: false, message: "", type: "success" });
+      setToast({
+        show: false,
+        message: "",
+        type: "success",
+      });
     }, 3000);
   };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
+
     setLoading(true);
-    setSuccess(false);
 
     try {
-      const res = await fetch("https://formspree.io/f/xwvjarlr", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+      const res = await fetch(
+        "https://formspree.io/f/xwvjarlr",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(form),
+        }
+      );
 
       if (res.ok) {
-        setSuccess(true);
-
-        showToast("Donation sent successfully 🙌", "success");
+        showToast(
+          "Donation sent successfully 🙌",
+          "success"
+        );
 
         setForm({
           name: "",
@@ -70,14 +94,21 @@ function Donate() {
           currency: "NGN",
         });
       } else {
-        showToast("Something went wrong. Try again.", "error");
+        showToast(
+          "Something went wrong. Try again.",
+          "error"
+        );
       }
     } catch (err) {
       console.error(err);
-      showToast("Network error. Check connection.", "error");
-    }
 
-    setLoading(false);
+      showToast(
+        "Network error. Check connection.",
+        "error"
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -103,8 +134,8 @@ function Donate() {
           </h2>
 
           <p className="mt-7 text-white/80 text-lg leading-relaxed max-w-md">
-            Every contribution directly supports food distribution, logistics,
-            and emergency outreach for vulnerable families.
+            Every contribution directly supports food distribution,
+            logistics, and emergency outreach for vulnerable families.
           </p>
 
           <div className="mt-10 space-y-2 text-sm text-white/70">
@@ -126,45 +157,96 @@ function Donate() {
             Make a Donation
           </h3>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4"
+          >
             <input
               name="name"
+              type="text"
               placeholder="Full Name"
               value={form.name}
               onChange={handleChange}
-              className="w-full p-3 rounded-xl border border-gray-200 focus:border-green-500 outline-none transition"
+              required
+              className="
+                w-full
+                p-3
+                rounded-xl
+                border border-gray-200
+                focus:border-green-500
+                outline-none
+                transition
+              "
             />
 
             <input
               name="email"
+              type="email"
               placeholder="Email Address"
               value={form.email}
               onChange={handleChange}
-              className="w-full p-3 rounded-xl border border-gray-200 focus:border-green-500 outline-none transition"
+              required
+              className="
+                w-full
+                p-3
+                rounded-xl
+                border border-gray-200
+                focus:border-green-500
+                outline-none
+                transition
+              "
             />
 
             <input
               name="address"
+              type="text"
               placeholder="Physical Address"
               value={form.address}
               onChange={handleChange}
-              className="w-full p-3 rounded-xl border border-gray-200 focus:border-green-500 outline-none transition"
+              required
+              className="
+                w-full
+                p-3
+                rounded-xl
+                border border-gray-200
+                focus:border-green-500
+                outline-none
+                transition
+              "
             />
 
             <div className="grid grid-cols-3 gap-3">
               <input
                 name="amount"
+                type="number"
+                min="1"
                 placeholder="Amount"
                 value={form.amount}
                 onChange={handleChange}
-                className="col-span-2 p-3 rounded-xl border border-gray-200 focus:border-green-500 outline-none transition"
+                required
+                className="
+                  col-span-2
+                  p-3
+                  rounded-xl
+                  border border-gray-200
+                  focus:border-green-500
+                  outline-none
+                  transition
+                "
               />
 
               <select
                 name="currency"
                 value={form.currency}
                 onChange={handleChange}
-                className="p-3 rounded-xl border border-gray-200 bg-white focus:border-green-500 outline-none"
+                className="
+                  p-3
+                  rounded-xl
+                  border border-gray-200
+                  bg-white
+                  focus:border-green-500
+                  outline-none
+                "
               >
                 <option value="NGN">NGN</option>
                 <option value="USD">USD</option>
@@ -174,9 +256,25 @@ function Donate() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-xl bg-[#008000] text-white font-semibold hover:bg-green-700 hover:scale-[1.02] active:scale-95 transition-all duration-300 disabled:opacity-50 cursor-pointer"
+              className="
+                w-full
+                py-3
+                rounded-xl
+                bg-[#008000]
+                text-white
+                font-semibold
+                hover:bg-green-700
+                hover:scale-[1.02]
+                active:scale-95
+                transition-all
+                duration-300
+                disabled:opacity-50
+                cursor-pointer
+              "
             >
-              {loading ? "Submitting..." : "Submit Donation"}
+              {loading
+                ? "Submitting..."
+                : "Submit Donation"}
             </button>
           </form>
         </motion.div>
@@ -185,10 +283,20 @@ function Donate() {
       {/* TOAST */}
       {toast.show && (
         <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          initial={{
+            opacity: 0,
+            y: 30,
+            scale: 0.9,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          }}
           className={`fixed bottom-6 right-6 px-5 py-3 rounded-xl shadow-xl text-white font-medium ${
-            toast.type === "success" ? "bg-green-600" : "bg-red-600"
+            toast.type === "success"
+              ? "bg-green-600"
+              : "bg-red-600"
           }`}
         >
           {toast.message}
